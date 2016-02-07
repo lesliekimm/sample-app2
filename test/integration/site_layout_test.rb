@@ -9,5 +9,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
 		assert_select "a[href=?]", about_path				# check there is one link to about path
 		assert_select "a[href=?]", contact_path				# check there is one link to contact path
 		assert_select "a[href=?]", signup_path				# check there is one link to signup path
+		get signup_path										# get signup path
+		assert_select "title", full_title("Sign Up")		# check full_title() functionality
 	end
 end
