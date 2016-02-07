@@ -1,4 +1,4 @@
-class SessionController < ApplicationController
+class SessionsController < ApplicationController
   	def new
   	end
 
@@ -6,7 +6,8 @@ class SessionController < ApplicationController
   		user = User.find_by(email: params[:session][:email].downcase)
 
   		if user && user.authenticate(params[:session][:password])		# authenticate method is provided by has_secure_password
-  			# Log the user in and redirect to user's show page
+  			log_in user
+  			redirect_to user
   		else
   			# Create an error message and display login page
   			flash.now[:danger] = 'Invalid email/password combination'	# using flash.now will cause flash to disappear upon next request

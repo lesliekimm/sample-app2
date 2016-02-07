@@ -5,9 +5,9 @@ Rails.application.routes.draw do
     get    'contact' => 'static_pages#contact'
     get    'help'    => 'static_pages#help'
     get    'signup'  => 'users#new'
-    get    'login'   => 'session#new'
-    post   'login'	 => 'session#create'
-    delete 'logout'  => 'session#destroy'
+    get    'login'   => 'sessions#new'
+    post   'login'	 => 'sessions#create'
+    delete 'logout'  => 'sessions#destroy'
 
     resources :users							# creates all actions for REST architecture
 end
