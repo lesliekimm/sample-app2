@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
   	def new
+  		@user = User.new					# signup route calls this action
+  	end
+
+  	def create
   	end
 
   	def show
