@@ -5,4 +5,6 @@ Rails.application.routes.draw do
     get 'contact' => 'static_pages#contact'
     get 'help'    => 'static_pages#help'
     get 'signup'  => 'users#new'
+
+    resources :users							# creates all actions for REST architecture
 end
