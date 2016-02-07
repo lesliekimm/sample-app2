@@ -16,5 +16,8 @@
 !/log/.keep
 /tmp
 
-# Ignore notes file
-notes.txt
+# Ignore all notes file.
+/notes/*
+
+# Ignore Spring files.
+/spring/*.pid

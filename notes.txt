@@ -1,0 +1,109 @@
+rails _4.2.2_ new app_name
+	creates all files
+
+edit gemfile
+run bundle install --without production
+	skip the pg gem for PostgresSQL in dev --> use this for Heroku
+	use SQLite for dev & testing instead
+
+
+deploy to heroku
+heroku create
+git push heroku master
+
+Rails actions are bundled inside controllers
+MVC - model view controller
+
+rails generate controller StaticPages home help
+	creates a controller for static_pages --> static_pages_controller.rb
+	creates routes get 'static_pages/help'
+				   get 'static_pages/home'
+	creates views static_pages director w/ separate html files for home and help
+		app/views/static_pages/home.html.erb
+		app/vies/static_pages/help.html.erb
+
+using CamelCase to name controller will yield ruby convention snake_case file names
+Ruby uses CamelCase for class names
+
+undoing things
+	rails generate controller StaticPages home help
+	rails destroy controller StaticPages home help
+
+	rails generate model User name:string email:string
+	rails destroy model User
+
+	bundle exec rake db:migrate
+	bundle exec rake db:rollback
+	bundle exec rake db:migrate VERSION=0
+
+HTTP - hyptertext transfer protocol - defines basic operations GET, POST, PATCH and DELETE
+	refers to operations between client computer (usually running web browser such as Chrome, Firefox or Safari)
+						   and a server computer (usually running a web server such as Apache or Nginx)
+	when developing Rails app locally, client & server are same physical machine
+	GET is most common HTTP operation used for reading data on web --> means get a page
+	POST is next most common --> request sent by browswer when you submit a form
+		typically in Rails, POST is used to create things
+	PATCH is used to update things on remote server
+	DELETE is used to destroy things on remote server
+
+
+in creating StaticPagesController class (static_pages_controller.rb)
+	organize functions (aka methods) like home and help actions
+	b/c it inherits from ApplicationController class, in Rails, when visiting /static_pages/home, Rails does the following
+		1) looks in StaticPagesControlelr class
+		2) executes code in home action
+		3) renders the view (/views/static_pages/home.html.erb)
+			 initially home action is empty, so it just renders the view without doing anything
+
+good practice to write automated tests
+when generating controller --> it created test files as well --> static_pages_controller_test.rb
+	each test gets an action & verifies via an assertion that result is a success
+	:success is a representation of HTTP status code 200 OK
+
+	test "should get home" do 			# lets test home page
+  		get :home						# issue get requestion for home action
+  		assert_response :success		# make sure we received a success tatus code in response
+	end
+
+to run tests --> bundle exec rake test
+
+test driven development (TDD) involves writing a failing test first, writing code to make it pass & refactoring if necessary
+
+code may start to "smell" --> ugly, bloated, filled with repeititon
+	computer doesn't care but humans do
+	we refactor
+	we'll use layout file to eliminate duplication
+
+assert_select --> allows us to test for presence of a particular HTML tag (aka selector)
+
+embedded Ruby will allow us to remove repitition
+<% provide(:title, "Home") %>		# Rails should call provide function & associate "Home" with label :title
+%= yield(:title) %>					# this will insert title into template using yield function
+
+<% ... %>		# executes code inside
+<%= ... %>		# executes code inside & inserts result into template
+
+app/views/layouts/application.html.erb is special layout html that is used to render every html file
+
+setting root route
+	root 'static_pages#home'
+
+use setup in test to do something before each test is run
+use @instance_name and then use #{@instance_name} for string interpolation
+
+to get default Rails test to show in Red & Green --> use minitest-reporters gem in test_helper.rb
+
+when there's an error in a test, test runner shows tack trace which can be very long so we can elminate unwanted lines by using mini_backtrace gem combined w/ backtrace silencer
+
+if you use Guard, tests will run automatically
+	if we change anything in static_pages_controller_test.rb file, only those tests get run
+	we can configure Guard to automatically run static_pages_controller_test when home.html.erb file is modified
+	use guard gem which is already installed by initializing it
+		bundle exec guard init
+	then edit Guardfile so Guard runs the right tests when integration tests & views are updated
+
+	open new terminal
+		bundle exec guard
+		now we are watching and automatically testing integration tests when controller is changed
+		to run all tests, hit return at guard> prompt
+
