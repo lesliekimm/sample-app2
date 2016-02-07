@@ -9,7 +9,7 @@ class SessionController < ApplicationController
   			# Log the user in and redirect to user's show page
   		else
   			# Create an error message and display login page
-  			flash[:danger] = 'Invalid email/password combination'		# not quite right
+  			flash.now[:danger] = 'Invalid email/password combination'	# using flash.now will cause flash to disappear upon next request
   			render 'new'
   		end
   	end
