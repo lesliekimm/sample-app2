@@ -3,9 +3,9 @@
 leslie:
     name: leslie
     email: leslie@lesliekimm.com
-    password_digest: <%= User.digest('thumper') %>
+    password_digest: <%= User.digest('password') %>
 
 thumper:
-    name: Thumper
+    name: thumper
     email: thumper@lesliekimm.com
-    password_digest: <%= User.digest('hooman') %>
+    password_digest: <%= User.digest('password') %>
