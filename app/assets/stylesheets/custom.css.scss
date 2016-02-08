@@ -130,6 +130,30 @@ input {
 	}
 }
 
+.checkbox {
+	margin-top: 3px;
+	margin-bottom: 10px;
+	span {
+		margin-left: 20px;
+		font-weight: normal;
+	}
+}
+
+#session_remember_me {
+	width: auto;
+	margin-left: 0;
+}
+
+.left-login-bottom {
+	margin-top: 0;
+	float: left;
+}
+
+.right-login-bottom {
+	margin-top: 0;
+	float: right;
+}
+
 /* sidebar */
 
 aside {
