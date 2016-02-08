@@ -27,7 +27,7 @@ module SessionsHelper
 
   	# Returns the user corresponding to the remember token cookie.
   	def current_user
-		if (user_id = session[:user_id])								# this is an assignment - if session of user id exists
+		if (user_id = session[:user_id])								        # this is an assignment - if session of user id exists
       		@current_user ||= User.find_by(id: user_id)
     	elsif (user_id = cookies.signed[:user_id])						# if cookies of user_id exists												
       		user = User.find_by(id: user_id)
@@ -50,7 +50,8 @@ module SessionsHelper
     
     # Stores the URL trying to be accessed.
     def store_location
-        session[:forwading_url] = request.url if request.get?
+        # debugger
+        session[:forwarding_url] = request.url if request.get?
     end
 
     # Redirects to stored location (or to the default).

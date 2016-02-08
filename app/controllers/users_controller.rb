@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     before_action :logged_in_user, only: [:edit, :update, :index]
-    before_action :correct_user, only: [:edit, :update, :index]
+    before_action :correct_user, only: [:edit, :update]
 
   	def new
   		@user = User.new					# signup route calls this action
@@ -19,7 +19,6 @@ class UsersController < ApplicationController
 
   	def show
   		@user = User.find(params[:id])		# technically, params[:id] returns a string but find knows to convert to int
-  		# debugger
   	end
 
     def edit
@@ -59,6 +58,6 @@ class UsersController < ApplicationController
         # Confirms the correct user
         def correct_user
             @user = User.find(params[:id])
-            redirect_to(root_url) unless current_user?(@user)
+            redirect_to(root_url) unless @user == current_user
         end
 end
