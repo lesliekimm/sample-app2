@@ -20,6 +20,7 @@ class UsersController < ApplicationController
 
   	def show
   		@user = User.find(params[:id])		# technically, params[:id] returns a string but find knows to convert to int
+      @microposts = @user.microposts.paginate(page: params[:page])
   	end
 
     def edit
