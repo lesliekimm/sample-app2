@@ -10,9 +10,9 @@ class UsersController < ApplicationController
   	def create
   		@user = User.new(user_params)		# use aux method defined in private to require user and permit only name, email & pws
   		if @user.save
-        log_in @user
-  			flash[:success] = "Welcome to the Sample App!"
-  			redirect_to @user 				# same as redirect_to user_url(@user) - performs show action
+        UserMailer.account_activation(@user).deliver_now
+        flash[:info] = "Please check your email to activate your account."
+        redirect_to root_url
   		else
   			render 'new'					# if save is unsuccessful, we render 'new' with errors
   		end
