@@ -9,4 +9,5 @@ Rails.application.routes.draw do
     post   'login'   => 'sessions#create'
     delete 'logout'  => 'sessions#destroy'
     resources :users							# creates all actions for REST architecture
+    resources :account_activations, only: [:edit]
 end
