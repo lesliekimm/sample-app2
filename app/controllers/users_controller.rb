@@ -2,6 +2,7 @@ class UsersController < ApplicationController
     before_action :logged_in_user, only: [:edit, :update, :index, :destroy, :followers, :following]
     before_action :correct_user, only: [:edit, :update]
     before_action :admin_user, only: :destroy
+    # before_action :set_user, only: [:bio, :show]
 
   	def new
   		@user = User.new					# signup route calls this action
@@ -17,6 +18,10 @@ class UsersController < ApplicationController
   			render 'new'					# if save is unsuccessful, we render 'new' with errors
   		end
   	end
+
+    def bio
+      # @user = User.find(params[:id])
+    end
 
   	def show
   		@user = User.find(params[:id])		# technically, params[:id] returns a string but find knows to convert to int
@@ -72,6 +77,10 @@ class UsersController < ApplicationController
         def correct_user
             @user = User.find(params[:id])
             redirect_to(root_url) unless @user == current_user
+        end
+
+        def set_user
+          @user = User.find(params[:id])
         end
 
         # Confirms admin user
